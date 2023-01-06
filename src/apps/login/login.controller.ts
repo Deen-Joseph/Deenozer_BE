@@ -7,7 +7,7 @@ import {
   Body,
 } from '@nestjs/common';
 import { AuthService } from 'src/services/auth/auth.service';
-import { LocalAuthGuard } from 'src/services/auth/local-auth.guard';
+import { LocalAuthGuard } from 'src/services/auth/local-strategy/local-auth.guard';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 @Controller('auth')
@@ -20,15 +20,9 @@ export class LoginController {
   }
 
   @HttpCode(200)
-  // @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Body() UserData: CreateUserDto): any {
-    // const user = req.email;
-    // user.password = undefined;
-    // console.log("poo",UserData);
-    // return this.userService.findOne(+id);
-
+  login(@Body() UserData: CreateUserDto): any {   
     return this.authService.validateUser(UserData.email, UserData.password);
-    // return user;
   }
 }

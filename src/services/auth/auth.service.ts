@@ -2,7 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserService } from '../../user/user.service';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt'
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -21,7 +22,7 @@ export class AuthService {
         password: hashedPassword,
       });
       createdUser.password = undefined;
-      return createdUser;
+      return ('User Successfully Created')
     } catch (error) {
       if (error?.code === PostgresErrorCode.UniqueViolation) {
         throw new HttpException(
@@ -37,12 +38,13 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string): Promise<any> {
-    console.log(email, password)
     try {
       const user = await this.userService.findByEmail(email);
       await this.verifyPassword(password, user.password);
       user.password = undefined;
-      return user;
+      const access_token = await this.login(user)
+      return access_token
+      // return user;
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',
@@ -67,7 +69,7 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { email: user.email, sub: user.userId };
+    const payload = { email: user.email, sub: user.email };
     return {
       access_token: this.jwtService.sign(payload),
     };
