@@ -20,12 +20,15 @@ export class LoginController {
   }
 
   @HttpCode(200)
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req): any {
-    const user = req.user;
-    user.password = undefined;
-    // return this.authService.login(req.user);
-    return user;
+  login(@Body() UserData: CreateUserDto): any {
+    // const user = req.email;
+    // user.password = undefined;
+    // console.log("poo",UserData);
+    // return this.userService.findOne(+id);
+
+    return this.authService.validateUser(UserData.email, UserData.password);
+    // return user;
   }
 }
