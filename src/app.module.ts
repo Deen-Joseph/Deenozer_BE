@@ -7,28 +7,40 @@ import { LoginController } from './apps/login/login.controller';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
+import { PlayersModule } from './apps/players/players.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, UserModule,TypeOrmModule.forRootAsync({
-    imports: [ConfigModule.forRoot({
-      isGlobal:true,
-      envFilePath :'.local.env',
-      // envFilePath:'.prod.env', for production
-    })],
-    useFactory: (configService: ConfigService) => ({
-      type: 'postgres',
-      host: configService.get('DB_HOST'),
-      port: +configService.get<number>('DB_PORT'),
-      username: configService.get('DB_USER'),
-      password: configService.get('DB_PASSWORD'),
-      database: configService.get('DB_DATABASE'),
-      synchronize: configService.get<boolean>('DB_SYNC'),
-      logging: true,
-      entities: [__dirname+ '/**/*.entity{.ts,.js}'],
+  imports: [
+    MulterModule.register({
+      dest: './uploads',
     }),
-    inject: [ConfigService],
-  })],
-    
+    AuthModule,
+    UsersModule,
+    UserModule,
+    PlayersModule,
+    TypeOrmModule.forRootAsync({
+      imports: [
+        ConfigModule.forRoot({
+          isGlobal: true,
+          envFilePath: '.local.env',
+          // envFilePath:'.prod.env', for production
+        }),
+      ],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: +configService.get<number>('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
+        synchronize: configService.get<boolean>('DB_SYNC'),
+        logging: true,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      }),
+      inject: [ConfigService],
+    }),
+  ],
   controllers: [AppController, LoginController],
   providers: [AppService],
 })
