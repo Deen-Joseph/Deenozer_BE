@@ -11,14 +11,12 @@ export class PlayersService {
     @InjectRepository(Player)
     private readonly userRepository: Repository<Player>,
   ) {}
-  create(createPlayerDto) {
-    // const obj = Object.assign({},createPlayerDto)
 
-    // console.log(obj)
-    // // console.log('doubt',createPlayerDto.)
+  create(createPlayerDto: CreatePlayerDto) {
     let player: Player = new Player();
+   
     player.about = createPlayerDto.about;
-    player.attachFile = createPlayerDto.attachFile;
+    // player.attachFile = createPlayerDto.attachFile;
     player.club = createPlayerDto.club;
     player.dob = createPlayerDto.dob;
     player.first_name = createPlayerDto.first_name;
@@ -26,7 +24,6 @@ export class PlayersService {
     player.gender = createPlayerDto.gender;
     player.nationality = createPlayerDto.nationality;
     player.position = createPlayerDto.position;
-    console.log(player)
     return this.userRepository.save(player);
   }
 

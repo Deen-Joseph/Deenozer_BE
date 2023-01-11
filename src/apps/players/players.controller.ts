@@ -21,22 +21,15 @@ export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file', {
-    dest: '/uploads'
-  }))
+  // @UseInterceptors(FileInterceptor('file'))
   create(
-    @UploadedFile() file,
+    // @UploadedFile() file: Express.Multer.File,
     @Body() createPlayerDto:CreatePlayerDto
   ) {
-    if(file){
-      createPlayerDto.attachFile = file
-    }
-    // console.log(file)
-    // console.log(createPlayerDto.data);
-    // const players:CreatePlayerDto = createPlayerDto.data
-    console.log(createPlayerDto);
-    // createPlayerDto.attachFile = file
-    // console.log
+    // if(file){
+    //   createPlayerDto.attachFile = file
+    // }
+    // console.log(createPlayerDto)
     return this.playersService.create(createPlayerDto);
   }
 
