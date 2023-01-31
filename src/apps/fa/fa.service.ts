@@ -1,26 +1,54 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateFaDto } from './dto/create-fa.dto';
 import { UpdateFaDto } from './dto/update-fa.dto';
+import { Fa } from './entities/fa.entity';
 
 @Injectable()
 export class FaService {
+  constructor(
+    @InjectRepository(Fa)
+    private readonly userRepository: Repository<Fa>,
+  ) {}
+
   create(createFaDto: CreateFaDto) {
-    return 'This action adds a new fa';
+    const fa: Fa = new Fa();
+
+    fa.about = createFaDto.about;
+    // fa.attachFile = createFaDto.attachFile;
+    fa.fa_name = createFaDto.fa_name;
+    fa.dof = createFaDto.dof;
+    fa.confederation = createFaDto.confederation;
+    fa.nationality = createFaDto.nationality;
+    fa.ranking = createFaDto.ranking;
+    return this.userRepository.save(fa);
   }
 
   findAll() {
-    return `This action returns all fa`;
+    return this.userRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} fa`;
+    return this.userRepository.findOneBy({
+      id: id,
+    });
   }
 
   update(id: number, updateFaDto: UpdateFaDto) {
-    return `This action updates a #${id} fa`;
+    const fa: Fa = new Fa();
+
+    fa.about = updateFaDto.about;
+    // fa.attachFile = updateFaDto.attachFile;
+    fa.fa_name = updateFaDto.fa_name;
+    fa.dof = updateFaDto.dof;
+    fa.confederation = updateFaDto.confederation;
+    fa.nationality = updateFaDto.nationality;
+    fa.ranking = updateFaDto.ranking;
+    return this.userRepository.save(fa);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} fa`;
+    return this.userRepository.delete({ id });
   }
 }

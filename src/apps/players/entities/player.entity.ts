@@ -60,6 +60,9 @@ export class Player {
   @Column()
   position: string;
 
+  @Column()
+  ranking: number;
+
   @Column({ type: 'varchar', length: 300, nullable: true })
   attachFile: string;
 
