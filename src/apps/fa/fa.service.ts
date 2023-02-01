@@ -37,7 +37,7 @@ export class FaService {
 
   update(id: number, updateFaDto: UpdateFaDto) {
     const fa: Fa = new Fa();
-
+    fa.id = id;
     fa.about = updateFaDto.about;
     // fa.attachFile = updateFaDto.attachFile;
     fa.fa_name = updateFaDto.fa_name;

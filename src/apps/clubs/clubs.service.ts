@@ -38,7 +38,7 @@ export class ClubsService {
 
   update(id: number, updateClubDto: UpdateClubDto) {
     const club: Club = new Club();
-
+    club.id = id;
     club.about = updateClubDto.about;
     // club.attachFile = updateClubDto.attachFile;
     club.club_name = updateClubDto.club_name;
