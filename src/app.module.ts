@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { PlayersModule } from './apps/players/players.module';
+import { ClubsModule } from './apps/clubs/clubs.module';
+import { FaModule } from './apps/fa/fa.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { PlayersModule } from './apps/players/players.module';
     UsersModule,
     UserModule,
     PlayersModule,
+    ClubsModule,
+    FaModule,
     TypeOrmModule.forRootAsync({
       imports: [
         ConfigModule.forRoot({

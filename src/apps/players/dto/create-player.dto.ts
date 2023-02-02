@@ -1,4 +1,10 @@
-import { IsDate, IsMimeType, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsDate,
+  IsMimeType,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class CreatePlayerDto {
   first_name: string;
@@ -10,11 +16,13 @@ export class CreatePlayerDto {
   gender: string;
 
   club: string;
-  
+
   @IsDate()
   dob: Date;
 
   about: string;
+
+  ranking: number;
 
   position: string;
 

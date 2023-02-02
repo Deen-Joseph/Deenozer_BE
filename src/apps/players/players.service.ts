@@ -13,7 +13,7 @@ export class PlayersService {
   ) {}
 
   create(createPlayerDto: CreatePlayerDto) {
-    let player: Player = new Player();
+    const player: Player = new Player();
    
     player.about = createPlayerDto.about;
     // player.attachFile = createPlayerDto.attachFile;
@@ -24,6 +24,7 @@ export class PlayersService {
     player.gender = createPlayerDto.gender;
     player.nationality = createPlayerDto.nationality;
     player.position = createPlayerDto.position;
+    player.ranking = createPlayerDto.ranking;
     return this.userRepository.save(player);
   }
 
@@ -38,7 +39,7 @@ export class PlayersService {
   }
 
   update(id: number, updatePlayerDto: UpdatePlayerDto) {
-    let player: Player = new Player();
+    const player: Player = new Player();
     player.id = id;
     player.about = updatePlayerDto.about;
     player.attachFile = updatePlayerDto.attachFile;
