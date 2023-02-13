@@ -12,11 +12,11 @@ export class PlayersService {
     private readonly userRepository: Repository<Player>,
   ) {}
 
-  create(createPlayerDto: CreatePlayerDto) {
+  create(createPlayerDto: CreatePlayerDto , file:any) {
     const player: Player = new Player();
    
     player.about = createPlayerDto.about;
-    // player.attachFile = createPlayerDto.attachFile;
+    player.attachFile = file;
     player.club = createPlayerDto.club;
     player.dob = createPlayerDto.dob;
     player.first_name = createPlayerDto.first_name;
